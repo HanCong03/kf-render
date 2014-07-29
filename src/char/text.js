@@ -92,7 +92,6 @@ define( function ( require ) {
                 var data = FontManager.getCharacterValue( input, fontFamily );
 
                 if ( !data ) {
-                    console.error( "missing code: " + input );
                     return '';
                 }
 
