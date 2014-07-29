@@ -43,7 +43,7 @@ define( function ( require ) {
             args = arguments,
             ctx = null;
 
-        if ( !isChromeCore() ) {
+        if ( true ) {
             drawToCanvas.apply( null, args );
         } else {
 
