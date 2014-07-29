@@ -123,8 +123,4 @@ define( function ( require ) {
 
     }
 
-    function isChromeCore () {
-        return window.navigator.userAgent.indexOf( "Chrome" ) !== -1;
-    }
-
 } );
