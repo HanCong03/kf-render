@@ -32,7 +32,7 @@ define( function ( require ) {
         func: {
             // 上下标在函数名上下两侧的函数列表
             "ud-script": {
-                "limit": true
+                "lim": true
             }
         }
 

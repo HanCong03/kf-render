@@ -113,13 +113,12 @@ define( function ( require ) {
 
         canvas.style.cssText = 'position: absolute; top: 0; left: 100000px; z-index: -1;';
 
-        doc.body.appendChild( canvas );
-        canvg( canvas, data.content );
-        doc.body.removeChild( canvas );
-
         window.setTimeout( function () {
+            doc.body.appendChild( canvas );
+            canvg( canvas, data.content );
+            doc.body.removeChild( canvas );
             cb( canvas.toDataURL( type ) );
-        }, 50 );
+        }, 0 );
 
     }
 

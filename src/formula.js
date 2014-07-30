@@ -154,7 +154,7 @@ define( function ( require ) {
 
             resize: function () {
 
-                var renderBox = this.container.getFixRenderBox();
+                var renderBox = this.container.getRenderBox( "paper" );
 
                 this.node.setAttribute( "width", renderBox.width );
                 this.node.setAttribute( "height", renderBox.height );

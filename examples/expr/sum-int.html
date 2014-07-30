@@ -20,10 +20,13 @@
 
             kf.ResourceManager.ready( function ( Formula ) {
 
-                var formula = new Formula( document.getElementById( "container" ) );
+                var formula = new Formula( document.getElementById( "container" ), {
+                    fontsize: 15
+                } );
 
                 var exps = [
-                    new kf.SummationExpression( "a+b", "c", "d" )
+                    new kf.SummationExpression( "a+b", "c", "d" ),
+                    new kf.SubscriptExpression( "a", "2" )
                 ];
 //                var exps = [
 //                    new kf.CombinationExpression( "a=", new kf.IntegrationExpression( "a+b" ), "+b" ),
@@ -50,7 +53,7 @@
 </head>
 <body>
     <h1>分数表达式</h1>
-    <p>
+    <p style="font-family: 'KF AMS ROMAN';">
         构造方法： new kf.Text( "\\\\to \\\\gets \\\\subseteq" );
     </p>
     <p>

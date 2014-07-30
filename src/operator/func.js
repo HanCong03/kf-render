@@ -28,7 +28,6 @@ define( function ( require ) {
          */
         applyOperand: function ( expr, sup, sub ) {
 
-
             var opShape = generateOperator.call( this ),
                 expBox = expr.getFixRenderBox(),
                 scriptHanlder = this.parentExpression.isSideScript() ? 'applySide' : 'applyUpDown',
@@ -66,6 +65,15 @@ define( function ( require ) {
 
         var opShape = new Text( this.funcName, "KF AMS ROMAN" );
         this.addOperatorShape( opShape );
+
+        // 为操作符图形创建baseline和meanline方法
+        opShape.getBaseline = function () {
+            return opShape.getFixRenderBox().height;
+        };
+
+        opShape.getMeanline = function () {
+            return 0;
+        };
 
         return opShape;
 

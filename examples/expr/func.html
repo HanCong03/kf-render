@@ -11,8 +11,10 @@
             base: '../../src'
         });
     </script>
+    <script src="../../dev-lib/start.js"></script>
     <script src="../../dev-lib/exports.js"></script>
     <script src="../../dev-lib/dev-start.js"></script>
+    <!--<script src="../../dist/kity-formula.all.js"></script>-->
     <script>
         window.onload = function () {
 
@@ -21,11 +23,17 @@
                 var formula = new Formula( document.getElementById( "container" ) );
 
                 var exps = [
-                    new kf.CombinationExpression( "ea", new kf.FunctionExpression( "sin", 30 ), "add" )
+                    new kf.FunctionExpression( "lim", "a+b", null, "n\\to\\3" )
                 ];
 
                 kity.Utils.each( exps, function ( exp ) {
                     formula.appendExpression( exp );
+                } );
+
+                formula.toPNG( function ( img ) {
+                    var image = new Image();
+                    image.src = img;
+                    document.body.appendChild( image );
                 } );
 
             }, {

@@ -3308,12 +3308,12 @@ _p[1] = {
         function drawToCanvas(doc, data, type, cb) {
             var canvas = getImageCanvas(doc, data.width, data.height, type);
             canvas.style.cssText = "position: absolute; top: 0; left: 100000px; z-index: -1;";
-            doc.body.appendChild(canvas);
-            canvg(canvas, data.content);
-            doc.body.removeChild(canvas);
             window.setTimeout(function() {
+                doc.body.appendChild(canvas);
+                canvg(canvas, data.content);
+                doc.body.removeChild(canvas);
                 cb(canvas.toDataURL(type));
-            }, 50);
+            }, 0);
         }
     }
 };
@@ -4802,7 +4802,7 @@ _p[31] = {
                 this.insertExpression(expression, this.expressions.length);
             },
             resize: function() {
-                var renderBox = this.container.getFixRenderBox();
+                var renderBox = this.container.getRenderBox("paper");
                 this.node.setAttribute("width", renderBox.width);
                 this.node.setAttribute("height", renderBox.height);
             },
@@ -5283,6 +5283,13 @@ _p[39] = {
         function generateOperator() {
             var opShape = new Text(this.funcName, "KF AMS ROMAN");
             this.addOperatorShape(opShape);
+            // 为操作符图形创建baseline和meanline方法
+            opShape.getBaseline = function() {
+                return opShape.getFixRenderBox().height;
+            };
+            opShape.getMeanline = function() {
+                return 0;
+            };
             return opShape;
         }
     }
@@ -5679,7 +5686,7 @@ _p[47] = {
             func: {
                 // 上下标在函数名上下两侧的函数列表
                 "ud-script": {
-                    limit: true
+                    lim: true
                 }
             }
         };
