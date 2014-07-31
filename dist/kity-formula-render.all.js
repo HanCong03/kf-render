@@ -1,6 +1,6 @@
 /*!
  * ====================================================
- * Kity Formula Render - v1.0.0 - 2014-07-30
+ * Kity Formula Render - v1.0.0 - 2014-07-31
  * https://github.com/kitygraph/formula
  * GitHub: https://github.com/kitygraph/formula.git 
  * Copyright (c) 2014 Baidu Kity Group; Licensed MIT
@@ -5605,6 +5605,7 @@ _p[45] = {
             new FontInstall(document, options.path).mount(complete);
         }
         function complete() {
+            __readyState = true;
             kity.Utils.each(cbList, function(cb) {
                 cb(Formula);
             });

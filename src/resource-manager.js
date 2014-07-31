@@ -54,6 +54,7 @@ define( function ( require ) {
 
     function complete () {
 
+        __readyState = true;
         kity.Utils.each( cbList, function ( cb ) {
 
             cb( Formula );
