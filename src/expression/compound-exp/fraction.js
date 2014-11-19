@@ -21,6 +21,10 @@ define( function ( require ) {
 
         },
 
+        setZoom: function ( zoom ) {
+            return this.getOperator().setZoom( zoom );
+        },
+
         /*------- 重写分数结构的baseline和mealine计算方式 */
         getBaseline: function ( refer ) {
             var downOperand = this.getOperand( 1 ),

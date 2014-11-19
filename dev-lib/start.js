@@ -25,9 +25,19 @@ define( 'kf.start', function ( require ) {
         SuperscriptExpression: require( "expression/compound-exp/binary-exp/superscript" ),
         SubscriptExpression: require( "expression/compound-exp/binary-exp/subscript" ),
         SummationExpression: require( "expression/compound-exp/summation" ),
+        CasesExpression: require( "expression/compound-exp/cases" ),
+        HatExpression: require( "expression/compound-exp/hat" ),
+        TextcircledExpression: require( "expression/compound-exp/textcircled" ),
+        ProductExpression: require( "expression/compound-exp/product" ),
+        PmodExpression: require( "expression/compound-exp/pmod" ),
+        OverlineExpression: require( "expression/compound-exp/overline" ),
+        MatrixExpression: require( "expression/compound-exp/matrix" ),
+        SplitExpression: require( "expression/compound-exp/split" ),
+        OverparenExpression: require( "expression/compound-exp/overparen" ),
 
         // Brackets expressoin
-        BracketsExpression: require( "expression/compound-exp/brackets" )
+        BracketsExpression: require( "expression/compound-exp/brackets" ),
+        UnderbraceExpression: require( "expression/compound-exp/underbrace" )
 
     };
 

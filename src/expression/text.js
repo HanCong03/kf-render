@@ -6,6 +6,7 @@ define( function ( require ) {
 
     var Text = require( "char/text" ),
         kity = require( "kity" ),
+        CHAR_MAPPING = '⓪①②③④⑤⑥⑦⑧⑨⑩'.split( "" ),
         FONT_CONF = require( "char/conf" ),
         Expression = require( "expression/expression" ),
         TextExpression = kity.createClass( 'TextExpression', {
@@ -21,6 +22,10 @@ define( function ( require ) {
 
                 this.content = content + '';
 
+                if ( this.fontFamily === 'textcircled' ) {
+                    this.fontFamily = FONT_CONF.defaultFont;
+                    this.content = CHAR_MAPPING[ this.content-0 ];
+                }
                 this.textContent = new Text( this.content, this.fontFamily );
 
                 this.setChildren( 0, this.textContent );

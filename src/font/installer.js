@@ -6,7 +6,7 @@ define( function ( require ) {
 
     var kity = require( "kity" ),
         FontManager = require( "font/manager" ),
-        $ = require( "jquery" ),
+//        $ = require( "jquery" ),
         FONT_CONF = require( "sysconf" ).font,
         CHAR_LIST = require( "char/char-list" ),
         NODE_LIST = [];
@@ -50,12 +50,12 @@ define( function ( require ) {
 
         createFontStyle: function ( fontInfo ) {
 
-            var stylesheet = this.doc.createElement( "style" ),
-                tpl = '@font-face{\nfont-family: "${fontFamily}";\nsrc: url("${src}");\n}';
+            var stylesheet = this.doc.createElement( "style" );
+                //tpl = '@font-face{\nfont-family: "${fontFamily}";\nsrc: url("${src}");\n}';
 
             stylesheet.setAttribute( "type", "text/css" );
-            stylesheet.innerHTML = tpl.replace( '${fontFamily}', fontInfo.meta.fontFamily )
-                                       .replace( '${src}', fontInfo.meta.src );
+            //stylesheet.innerHTML = tpl.replace( '${fontFamily}', fontInfo.meta.fontFamily )
+            //                           .replace( '${src}', fontInfo.meta.src );
 
             this.doc.head.appendChild( stylesheet );
 
@@ -65,17 +65,21 @@ define( function ( require ) {
 
 
     function preload ( doc, fontInfo, callback ) {
-
-        $.get( fontInfo.meta.src, function ( data, state ) {
-
-            if ( state === "success" ) {
-                applyFonts( doc, fontInfo );
-            }
-
+        window.setTimeout(function () {
+            applyFonts( doc, fontInfo );
             callback();
-
-        } );
-
+        },0);
+//
+//        $.get( fontInfo.meta.src, function ( data, state ) {
+//
+//            if ( state === "success" ) {
+//                applyFonts( doc, fontInfo );
+//            }
+//
+//            callback();
+//
+//        } );
+//
     }
 
     function complete ( doc, callback ) {
@@ -84,7 +88,7 @@ define( function ( require ) {
             initFontSystemInfo( doc );
             removeTmpNode();
             callback();
-        }, 100 );
+        }, 0 );
 
     }
 

@@ -19,6 +19,7 @@ define( function ( require ) {
                 require( "font/map/kf-ams-cal" ),
                 require( "font/map/kf-ams-frak" ),
                 require( "font/map/kf-ams-bb" ),
+                require( "font/map/kf-ams-bold" ),
                 require( "font/map/kf-ams-roman" )
             ]
         },

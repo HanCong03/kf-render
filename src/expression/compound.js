@@ -102,7 +102,7 @@ define( function ( require ) {
 
         addedCall: function () {
 
-            this.operator.applyOperand.apply( this.operator, this.operands );
+            this.operator && this.operator.applyOperand.apply( this.operator, this.operands );
             return this;
 
         }

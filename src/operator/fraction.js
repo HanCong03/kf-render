@@ -13,14 +13,19 @@ define( function ( require ) {
 
         constructor: function () {
 
+            this.zoom = ZOOM;
             this.callBase( "Fraction" );
 
         },
 
+        setZoom: function ( zoom ) {
+            this.zoom = zoom;
+        },
+
         applyOperand: function ( upOperand, downOperand ) {
 
-            upOperand.scale( ZOOM );
-            downOperand.scale( ZOOM );
+            upOperand.scale( this.zoom );
+            downOperand.scale( this.zoom );
 
             var upWidth = Math.ceil( upOperand.getWidth() ),
                 downWidth = Math.ceil( downOperand.getWidth() ),
