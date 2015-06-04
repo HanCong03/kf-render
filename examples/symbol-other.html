@@ -11,6 +11,7 @@
             base: '../src'
         });
     </script>
+    <script src="../dev-lib/start.js"></script>
     <script src="../dev-lib/exports.js"></script>
     <script src="../dev-lib/dev-start.js"></script>
     <script>
@@ -18,20 +19,22 @@
 
             kf.ResourceManager.ready( function ( Formula ) {
 
-                var formula = new Formula( document.getElementById( "container" ) );
+                window.setTimeout(function () {
+                    var formula = new Formula( document.getElementById( "container" ) );
 
-                var sqrt1 = new kf.CombinationExpression( new kf.SuperscriptExpression( "q", 2 ), "+", new kf.SuperscriptExpression( "p", 3 ) ),
-                        sqrt2 = new kf.CombinationExpression( new kf.RadicalExpression( sqrt1 ) ),
-                        sqrt3 = new kf.CombinationExpression( "-q+", sqrt2 ),
-                        exps = [
-                            new kf.CombinationExpression( "2=", new kf.RadicalExpression( "4", "2" ) ),
-                            new kf.RadicalExpression( "a+b\\div\\c" ),
-                            new kf.CombinationExpression( "u=", new kf.RadicalExpression( sqrt3, 3 ) )
-                        ];
+                    var sqrt1 = new kf.CombinationExpression( new kf.SuperscriptExpression( "q", 2 ), "+", new kf.SuperscriptExpression( "p", 3 ) ),
+                            sqrt2 = new kf.CombinationExpression( new kf.RadicalExpression( sqrt1 ) ),
+                            sqrt3 = new kf.CombinationExpression( "-q+", sqrt2 ),
+                            exps = [
+                                new kf.CombinationExpression( "2=", new kf.RadicalExpression( "4", "2" ) ),
+                                new kf.RadicalExpression( "a+b\\div\\c" ),
+                                new kf.CombinationExpression( "u=", new kf.RadicalExpression( sqrt3, 3 ) )
+                            ];
 
-                kity.Utils.each( exps, function ( exp ) {
-                    formula.appendExpression( exp );
-                } );
+                    kity.Utils.each( exps, function ( exp ) {
+                        formula.appendExpression( exp );
+                    } );
+                }, 100);
 
             }, {
                 path: '../src/resource/'
