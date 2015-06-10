@@ -8,7 +8,7 @@ define( function ( require ) {
 
         MatrixOperator = require( "operator/matrix"),
 
-        ArrayExpression = kity.createClass( 'MatrixExpression', {
+        MatrixExpression = kity.createClass( 'MatrixExpression', {
 
             base: require( "expression/compound" ),
 
@@ -47,6 +47,6 @@ define( function ( require ) {
         } );
 
 
-    return ArrayExpression;
+    return MatrixExpression;
 
 } );

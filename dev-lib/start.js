@@ -32,6 +32,7 @@ define( 'kf.start', function ( require ) {
         PmodExpression: require( "expression/compound-exp/pmod" ),
         OverlineExpression: require( "expression/compound-exp/overline" ),
         MatrixExpression: require( "expression/compound-exp/matrix" ),
+        ArrayExpression: require( "expression/compound-exp/array" ),
         SplitExpression: require( "expression/compound-exp/split" ),
         OverparenExpression: require( "expression/compound-exp/overparen" ),
 
