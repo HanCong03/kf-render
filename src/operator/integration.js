@@ -70,6 +70,8 @@ define( function ( require ) {
 
             opGroup.addShape( opShape );
 
+            opShape.setAttr("shapeflag", '1');
+
             group.addShape( opBox );
             group.addShape( opGroup );
 

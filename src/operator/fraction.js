@@ -58,7 +58,10 @@ define( function ( require ) {
 
     function generateOperator ( width, overflow ) {
 
-        return new kity.Rect( width + overflow * 2, 1 ).fill( "black" );
+        var shape = new kity.Rect( width + overflow * 2, 1 ).fill( "black" );
+        shape.setAttr("shapeflag", '1');
+
+        return shape;
 
     }
 

@@ -3,16 +3,16 @@
  * @abstract
  */
 
-define( function ( require ) {
+define(function (require) {
 
-    var kity = require( "kity" ),
-        GTYPE = require( "def/gtype" );
+    var kity = require("kity"),
+        GTYPE = require("def/gtype");
 
-    return kity.createClass( 'Operator', {
+    return kity.createClass('Operator', {
 
-        base: require( "signgroup" ),
+        base: require("signgroup"),
 
-        constructor: function ( operatorName ) {
+        constructor: function (operatorName) {
 
             this.callBase();
 
@@ -27,15 +27,15 @@ define( function ( require ) {
             // 操作符图形
             this.operatorShape = new kity.Group();
 
-            this.addShape( this.operatorShape );
+            this.addShape(this.operatorShape);
 
         },
 
         applyOperand: function () {
-            throw new Error( 'applyOperand is abstract' );
+            throw new Error('applyOperand is abstract');
         },
 
-        setParentExpression: function ( exp ) {
+        setParentExpression: function (exp) {
             this.parentExpression = exp;
         },
 
@@ -48,9 +48,9 @@ define( function ( require ) {
         },
 
         // 提供给具体实现类附加其绘制的操作符图形的接口
-        addOperatorShape: function ( shpae ) {
+        addOperatorShape: function (shpae) {
 
-            return this.operatorShape.addShape( shpae );
+            return this.operatorShape.addShape(shpae);
 
         },
 
@@ -60,6 +60,6 @@ define( function ( require ) {
 
         }
 
-    } );
+    });
 
-} );
+});

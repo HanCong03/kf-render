@@ -20,6 +20,8 @@ define( function ( require ) {
                 opBox = null,
                 scale = 0;
 
+            opShape.setAttr("shapeflag", '1');
+
             this.addOperatorShape( opShape );
 
             opBox = opShape.getFixRenderBox();

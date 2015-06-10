@@ -3,12 +3,12 @@
  * @abstract
  */
 
-define( function ( require ) {
+define(function (require) {
 
-    var kity = require( 'kity' ),
-        GTYPE = require( 'def/gtype' );
+    var kity = require('kity'),
+        GTYPE = require('def/gtype');
 
-    return kity.createClass( 'SignGroup', {
+    return kity.createClass('SignGroup', {
 
         base: kity.Group,
 
@@ -16,16 +16,16 @@ define( function ( require ) {
 
             this.callBase();
 
-            this.box = new kity.Rect( 0, 0, 0, 0 );
+            this.box = new kity.Rect(0, 0, 0, 0);
             this.type = GTYPE.UNKNOWN;
 
-            this.addShape( this.box );
+            this.addShape(this.box);
 
             this.zoom = 1;
 
         },
 
-        setZoom: function ( zoom ) {
+        setZoom: function (zoom) {
 
             this.zoom = zoom;
 
@@ -37,21 +37,21 @@ define( function ( require ) {
 
         },
 
-        setBoxSize: function ( w, h ) {
+        setBoxSize: function (w, h) {
 
-            return this.box.setSize( w, h );
-
-        },
-
-        setBoxWidth: function ( w ) {
-
-            return this.box.setWidth( w );
+            return this.box.setSize(w, h);
 
         },
 
-        setBoxHeight: function ( h ) {
+        setBoxWidth: function (w) {
 
-            return this.box.setHeight( h );
+            return this.box.setWidth(w);
+
+        },
+
+        setBoxHeight: function (h) {
+
+            return this.box.setHeight(h);
 
         },
 
@@ -67,8 +67,9 @@ define( function ( require ) {
             return this.getWidth();
         },
 
-        addedCall: function () {}
+        addedCall: function () {
+        }
 
-    } );
+    });
 
-} );
+});

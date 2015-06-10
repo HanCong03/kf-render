@@ -38,6 +38,9 @@ define( function ( require ) {
                 diff = 0,
                 space = {};
 
+            leftBracket.setAttr("shapeflag", '1');
+            rightBracket.setAttr("shapeflag", '1');
+
             group.addShape( leftBracket );
             group.addShape( rightBracket );
             group.addShape( mod );

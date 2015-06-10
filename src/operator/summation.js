@@ -51,6 +51,8 @@ define( function ( require ) {
                 group = new kity.Group(),
                 opRenderBox = null;
 
+            operatorShape.setAttr("shapeflag", '1');
+
             group.addShape( opBgShape );
             group.addShape( operatorShape );
 

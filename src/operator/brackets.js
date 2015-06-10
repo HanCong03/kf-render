@@ -63,6 +63,7 @@ define( function ( require ) {
             leftBox = leftShape.getFixRenderBox();
             offset += leftBox.width;
             offset = Math.floor( offset );
+            leftShape.setAttr("shapeflag", '1');
         }
 
         exp.translate( offset, 0 );
@@ -76,8 +77,8 @@ define( function ( require ) {
             scale = expBox.height / rightBox.height;
             rightShape.scale( scale > 1 ? 1 : scale, scale );
             rightShape.translate( offset, 0 );
+            rightShape.setAttr("shapeflag", '1');
         }
-
     }
 
 } );

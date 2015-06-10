@@ -24,6 +24,8 @@ define( function ( require ) {
             ]
         },
 
+        color: '#000000',
+
         /*------------------------- 资源配置*/
         resource: {
             path: 'src/resource/'

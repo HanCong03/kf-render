@@ -53,6 +53,12 @@ define( function ( require ) {
                 box = [],
                 group = new kity.Group();
 
+            shape1.setAttr("shapeflag", '1');
+            shape2.setAttr("shapeflag", '1');
+            shape3.setAttr("shapeflag", '1');
+            leftLine.setAttr("shapeflag", '1');
+            rightLine.setAttr("shapeflag", '1');
+
             group.addShape( shape1 );
             group.addShape( shape2 );
             group.addShape( shape3 );

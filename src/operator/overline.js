@@ -34,8 +34,10 @@ define( function ( require ) {
 
         getOperatorShape : function ( width ) {
 
-            return new kity.Rect( width, 3 ).fill( 'black' );
+            var shape = new kity.Rect( width, 3 ).fill( 'black' );
+            shape.setAttr("shapeflag", '1');
 
+            return shape;
         }
 
     } );

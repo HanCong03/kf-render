@@ -69,6 +69,10 @@ define( function ( require ) {
                 offset = 0,
                 originHeight = 0;
 
+            shapes.forEach(function (shape) {
+                shape.setAttr("shapeflag", '1');
+            });
+
             this.addOperatorShape( group );
 
             for ( var i = 0; i < 5; i++ ) {

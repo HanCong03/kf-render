@@ -3,17 +3,17 @@
  * @abstract
  */
 
-define( function ( require ) {
+define(function (require) {
 
-    var kity = require( "kity" ),
+    var kity = require("kity"),
 
-        GTYPE = require( "def/gtype" ),
+        GTYPE = require("def/gtype"),
 
-        Expression = require( "expression/expression" );
+        Expression = require("expression/expression");
 
-    return kity.createClass( 'CompoundExpression', {
+    return kity.createClass('CompoundExpression', {
 
-        base: require( "expression/expression" ),
+        base: require("expression/expression"),
 
         constructor: function () {
 
@@ -25,32 +25,34 @@ define( function ( require ) {
             this.operator = null;
 
             this.operatorBox = new kity.Group();
-            this.operatorBox.setAttr( "data-type", "kf-editor-exp-op-box" );
+            this.operatorBox.setAttr("data-type", "kf-editor-exp-op-box");
 
             this.operandBox = new kity.Group();
-            this.operandBox.setAttr( "data-type", "kf-editor-exp-operand-box" );
+            this.operandBox.setAttr("data-type", "kf-editor-exp-operand-box");
 
-            this.setChildren( 0, this.operatorBox );
-            this.setChildren( 1, this.operandBox );
+            this.setChildren(0, this.operatorBox);
+            this.setChildren(1, this.operandBox);
+
+            this.color = null;
 
         },
 
         // 操作符存储在第1位置
-        setOperator: function ( operator ) {
+        setOperator: function (operator) {
 
-            if ( operator === undefined ) {
+            if (operator === undefined) {
                 return this;
             }
 
-            if ( this.operator ) {
+            if (this.operator) {
                 this.operator.remove();
             }
 
-            this.operatorBox.addShape( operator );
+            this.operatorBox.addShape(operator);
 
             this.operator = operator;
 
-            this.operator.setParentExpression( this );
+            this.operator.setParentExpression(this);
 
             // 表达式关联到操作符
             operator.expression = this;
@@ -66,31 +68,31 @@ define( function ( require ) {
         },
 
         // 操作数存储位置是从1开始
-        setOperand: function ( operand, index, isWrap ) {
+        setOperand: function (operand, index, isWrap) {
 
             // 不包装操作数
-            if ( isWrap === false ) {
-                this.operands[ index ] = operand;
+            if (isWrap === false) {
+                this.operands[index] = operand;
                 return this;
             }
 
-            operand = Expression.wrap( operand );
+            operand = Expression.wrap(operand);
 
-            if ( this.operands[ index ] ) {
-                this.operands[ index ].remove();
+            if (this.operands[index]) {
+                this.operands[index].remove();
             }
 
-            this.operands[ index ] = operand;
+            this.operands[index] = operand;
 
-            this.operandBox.addShape( operand );
+            this.operandBox.addShape(operand);
 
             return this;
 
         },
 
-        getOperand: function ( index ) {
+        getOperand: function (index) {
 
-            return this.operands[ index ];
+            return this.operands[index];
 
         },
 
@@ -100,13 +102,32 @@ define( function ( require ) {
 
         },
 
-        addedCall: function () {
+        addedCall: function (color) {
+            if (!this.operator) {
+                return this;
+            }
 
-            this.operator && this.operator.applyOperand.apply( this.operator, this.operands );
+            this.operator.applyOperand.apply(this.operator, this.operands);
+
+            var shapeNode = this.operator.node;
+            var pathNodes = shapeNode.getElementsByTagName('path');
+            var node;
+            var type;
+
+            for (var i = 0, len = pathNodes.length; i < len; i++) {
+                node = pathNodes[i];
+                type = node.getAttribute("shapeflag");
+
+                if (type) {
+                    node.setAttribute('fill', color);
+                } else if (node.getAttribute("shapestrokeflag")) {
+                    node.setAttribute('stroke', color);
+                }
+            }
+
             return this;
-
         }
 
-    } );
+    });
 
-} );
+});

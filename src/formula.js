@@ -2,36 +2,37 @@
  * 公式对象，表达式容器
  */
 
-define( function ( require ) {
+define(function (require) {
 
-    var kity = require( 'kity' ),
-        GTYPE = require( "def/gtype" ),
-        FontManager = require( "font/manager" ),
-        FontInstaller = require( "font/installer" ),
+    var DEFAULT_COLOR = require("sysconf").color;
+
+    var kity = require('kity'),
+        GTYPE = require("def/gtype"),
+        FontManager = require("font/manager"),
+        FontInstaller = require("font/installer"),
         DEFAULT_OPTIONS = {
             fontsize: 50,
             autoresize: true,
-            padding: [ 0 ]
+            padding: [0]
         },
-        Output = require( "base/output" ),
+        Output = require("base/output"),
         EXPRESSION_INTERVAL = 10,
 
-        ExpressionWrap = kity.createClass( 'ExpressionWrap', {
+        ExpressionWrap = kity.createClass('ExpressionWrap', {
 
-            constructor: function ( exp, config ) {
+            constructor: function (exp, config) {
 
                 this.wrap = new kity.Group();
-                this.bg = new kity.Rect( 0, 0, 0, 0 ).fill( "transparent" );
+                this.bg = new kity.Rect(0, 0, 0, 0).fill("transparent");
                 this.exp = exp;
 
                 this.config = config;
 
-                this.wrap.setAttr( "data-type", "kf-exp-wrap" );
-                this.bg.setAttr( "data-type", "kf-exp-wrap-bg" );
+                this.wrap.setAttr("data-type", "kf-exp-wrap");
+                this.bg.setAttr("data-type", "kf-exp-wrap-bg");
 
-                this.wrap.addShape( this.bg );
-                this.wrap.addShape( this.exp );
-
+                this.wrap.addShape(this.bg);
+                this.wrap.addShape(this.exp);
             },
 
             getWrapShape: function () {
@@ -51,54 +52,62 @@ define( function ( require ) {
                 var padding = this.config.padding,
                     expBox = this.exp.getFixRenderBox();
 
-                if ( padding.length === 1 ) {
-                    padding[ 1 ] = padding[ 0 ];
+                if (padding.length === 1) {
+                    padding[1] = padding[0];
                 }
 
-                this.bg.setSize( padding[ 1 ] * 2 + expBox.width, padding[ 0 ] * 2 + expBox.height );
-                this.exp.translate( padding[ 1 ], padding[ 0 ] );
+                this.bg.setSize(padding[1] * 2 + expBox.width, padding[0] * 2 + expBox.height);
+                this.exp.translate(padding[1], padding[0]);
 
             }
 
         }),
 
-        Formula = kity.createClass( 'Formula', {
+        Formula = kity.createClass('Formula', {
 
-            base: require( 'fpaper' ),
+            base: require('fpaper'),
 
-            constructor: function ( container, config ) {
+            constructor: function (container, config) {
 
-                this.callBase( container );
+                this.callBase(container);
                 this.expressions = [];
-                this.fontInstaller = new FontInstaller( this );
+                this.fontInstaller = new FontInstaller(this);
 
-                this.config = kity.Utils.extend( {}, DEFAULT_OPTIONS, config );
+                this.config = kity.Utils.extend({}, DEFAULT_OPTIONS, config);
 
                 this.initEnvironment();
 
                 this.initInnerFont();
 
+                this.setColor(this.config.color || DEFAULT_COLOR);
             },
 
             getContentContainer: function () {
-
                 return this.container;
+            },
 
+            getColor: function () {
+                return this.color;
+            },
+
+            setColor: function (color) {
+                this.color = color;
+                this.container.fill(this.color);
             },
 
             initEnvironment: function () {
 
-                this.zoom = ( this.config.fontsize ) / 50 ;
+                this.zoom = ( this.config.fontsize ) / 50;
 
-                if ( "width" in this.config ) {
-                    this.setWidth( this.config.width );
+                if ("width" in this.config) {
+                    this.setWidth(this.config.width);
                 }
 
-                if ( "height" in this.config ) {
-                    this.setHeight( this.config.height );
+                if ("height" in this.config) {
+                    this.setHeight(this.config.height);
                 }
 
-                this.node.setAttribute( "font-size", DEFAULT_OPTIONS.fontsize );
+                this.node.setAttribute("font-size", DEFAULT_OPTIONS.fontsize);
 
             },
 
@@ -107,57 +116,58 @@ define( function ( require ) {
                 var fontList = FontManager.getFontList(),
                     _self = this;
 
-                kity.Utils.each( fontList, function ( fontInfo ) {
-                    createFontStyle( fontInfo );
-                } );
+                kity.Utils.each(fontList, function (fontInfo) {
+                    createFontStyle(fontInfo);
+                });
 
-                function createFontStyle ( fontInfo ) {
+                function createFontStyle(fontInfo) {
 
-                    var stylesheet = _self.doc.createElement( "style" ),
+                    var stylesheet = _self.doc.createElement("style"),
                         tpl = '@font-face{font-family: "${fontFamily}";font-style: normal;src: url("${src}") format("woff");}';
 
-                    stylesheet.setAttribute( "type", "text/css" );
-                    stylesheet.innerHTML = tpl.replace( '${fontFamily}', fontInfo.meta.fontFamily )
-                        .replace( '${src}', fontInfo.meta.src );
+                    stylesheet.setAttribute("type", "text/css");
+                    stylesheet.innerHTML = tpl.replace('${fontFamily}', fontInfo.meta.fontFamily)
+                        .replace('${src}', fontInfo.meta.src);
 
-                    _self.resourceNode.appendChild( stylesheet );
+                    _self.resourceNode.appendChild(stylesheet);
 
                 }
 
             },
 
-            insertExpression: function ( expression, index ) {
-
-                var expWrap = this.wrap( expression );
+            insertExpression: function (expression, index) {
+                var expWrap = this.wrap(expression);
 
                 // clear zoom
                 this.container.clearTransform();
 
-                this.expressions.splice( index, 0, expWrap.getWrapShape() );
+                this.expressions.splice(index, 0, expWrap.getWrapShape());
 
-                this.addShape( expWrap.getWrapShape() );
+                var shape = expWrap.getWrapShape();
 
-                notifyExpression.call( this, expWrap.getExpression() );
+                this.addShape(shape);
+
+                notifyExpression.call(this, expWrap.getExpression(), this.color);
                 expWrap.resize();
-                correctOffset.call( this );
+                correctOffset.call(this);
 
                 this.resetZoom();
                 this.config.autoresize && this.resize();
 
             },
 
-            appendExpression: function ( expression ) {
+            appendExpression: function (expression) {
 
-                this.insertExpression( expression, this.expressions.length );
+                this.insertExpression(expression, this.expressions.length);
 
             },
 
             resize: function () {
 
-                var renderBox = this.container.getRenderBox( "paper" );
+                var renderBox = this.container.getRenderBox("paper");
 
-                this.node.setAttribute( "width", renderBox.width );
-                this.node.setAttribute( "height", renderBox.height );
+                this.node.setAttribute("width", renderBox.width);
+                this.node.setAttribute("height", renderBox.height);
 
             },
 
@@ -165,17 +175,17 @@ define( function ( require ) {
 
                 var zoomLevel = this.zoom / this.getBaseZoom();
 
-                if ( zoomLevel !== 0 ) {
+                if (zoomLevel !== 0) {
 
-                    this.container.scale( zoomLevel );
+                    this.container.scale(zoomLevel);
 
                 }
 
             },
 
-            wrap: function ( exp ) {
+            wrap: function (exp) {
 
-                return new ExpressionWrap( exp, this.config );
+                return new ExpressionWrap(exp, this.config);
 
             },
 
@@ -188,96 +198,95 @@ define( function ( require ) {
 
             clearExpressions: function () {
 
-                kity.Utils.each( this.expressions, function ( exp ) {
+                kity.Utils.each(this.expressions, function (exp) {
 
                     exp.remove();
 
-                } );
+                });
 
                 this.expressions = [];
 
             },
 
-            toJPG: function ( cb ) {
-                new Output( this ).toJPG( cb );
+            toJPG: function (cb) {
+                new Output(this).toJPG(cb);
             },
 
-            toPNG: function ( cb ) {
-                new Output( this ).toPNG( cb );
+            toPNG: function (cb) {
+                new Output(this).toPNG(cb);
             }
+        });
 
-        } );
+    kity.Utils.extend(Formula, {
 
-    kity.Utils.extend( Formula, {
+        registerFont: function (fontData) {
 
-        registerFont: function ( fontData ) {
-
-            FontManager.registerFont( fontData );
+            FontManager.registerFont(fontData);
 
         }
 
-    } );
+    });
 
     // 调整表达式之间的偏移
-    function correctOffset () {
+    function correctOffset() {
 
         var exprOffset = 0;
 
-        kity.Utils.each( this.expressions, function ( expr ) {
+        kity.Utils.each(this.expressions, function (expr) {
 
             var box = null;
 
-            if ( !expr ) {
+            if (!expr) {
                 return;
             }
 
-            expr.setMatrix( new kity.Matrix( 1, 0, 0, 1, 0, 0 ) );
+            expr.setMatrix(new kity.Matrix(1, 0, 0, 1, 0, 0));
             box = expr.getFixRenderBox();
-            expr.translate( 0 - box.x, exprOffset );
+            expr.translate(0 - box.x, exprOffset);
 
             exprOffset += box.height + EXPRESSION_INTERVAL;
 
-        } );
+        });
 
         return this;
 
     }
 
     // 通知表达式已接入到paper
-    function notifyExpression ( expression ) {
+    function notifyExpression(expression, color) {
 
         var len = 0;
 
-        if ( !expression ) {
+        if (!expression) {
             return;
         }
 
-        if ( expression.getType() === GTYPE.EXP ) {
+        if (expression.getType() === GTYPE.EXP) {
 
-            for ( var i = 0, len = expression.getChildren().length; i < len; i++ ) {
+            for (var i = 0, len = expression.getChildren().length; i < len; i++) {
 
-                notifyExpression( expression.getChild( i ) );
+                notifyExpression(expression.getChild(i), color);
 
             }
 
-        } else if ( expression.getType() === GTYPE.COMPOUND_EXP ) {
+        } else if (expression.getType() === GTYPE.COMPOUND_EXP) {
 
             // 操作数处理
-            for ( var i = 0, len = expression.getOperands().length; i < len; i++ ) {
+            for (var i = 0, len = expression.getOperands().length; i < len; i++) {
 
-                notifyExpression( expression.getOperand( i ) );
+                notifyExpression(expression.getOperand(i), color);
 
             }
 
             // 处理操作符
-            notifyExpression( expression.getOperator() );
+            notifyExpression(expression.getOperator(), color);
 
         }
 
-        expression.addedCall && expression.addedCall();
+        expression.addedCall && expression.addedCall(color);
 
     }
 
     return Formula;
 
-} );
+});

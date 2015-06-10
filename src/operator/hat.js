@@ -78,6 +78,9 @@ define( function ( require ) {
             }
 
             opShape = new kity.Path( pathData ).fill( "black" );
+
+            opShape.setAttr("shapeflag", '1');
+
             this.addOperatorShape( opShape );
 
             return opShape;
@@ -92,6 +95,9 @@ define( function ( require ) {
                 arrowShape = new kity.Path( pathData ).fill( "black" ),
                 lineShape = new kity.Rect( 0, height ).fill( "black" ),
                 box = null;
+
+            arrowShape.setAttr("shapeflag", '1');
+            lineShape.setAttr("shapeflag", '1');
 
             group.addShape( arrowShape );
             group.addShape( lineShape );
